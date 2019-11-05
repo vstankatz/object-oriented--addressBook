@@ -98,6 +98,20 @@ function showContact (contactId) {
   buttons.append("<button class='deleteButton' id=" + + contact.id + ">Delete</button>");
 }
 
+// function filterAnswers (filter1, filter2) {
+//   filter1 = filter1.filter(isFiltered);
+//     return filter1;
+//   filter2 = filter2.filter(isFiltered);
+//     return filter2;
+//
+// }
+//
+// function isFiltered (value) {
+//   if (value !== false || value !== null || value !== 0 || value !== ""){
+//     return value;
+//   }
+// }
+
 function attachContactListeners() {
   $("ul#contacts").on("click", "li", function() {
     showContact(this.id);
@@ -144,7 +158,9 @@ $(document).ready(function() {
     const merge = Object.assign(newContact, newAddress);
     console.log(merge);
 
+    // filterAnswers(newContact, newAddress);
     addressBook.addContact(newContact, newAddress);
+    $("p").not("").remove();
     displayContactDetails(addressBook);
   })
 })
