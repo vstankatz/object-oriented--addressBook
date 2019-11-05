@@ -78,6 +78,17 @@ function displayContactDetails(addressBookToDisplay) {
   contactsList.html(htmlForContactInfo);
 };
 
+function removeEmpty(contact) {
+  var x = $("input[name=address-form]").val();
+  if (x == 0) {
+    console.log("True");
+  } else {
+    showContact(this.id);
+    console.log("false");
+  }
+
+}
+
 function showContact (contactId) {
   var contact = addressBook.findContact(contactId);
   $("#show-contact").show();
@@ -96,7 +107,10 @@ function showContact (contactId) {
   var buttons = $("#buttons");
   buttons.empty();
   buttons.append("<button class='deleteButton' id=" + + contact.id + ">Delete</button>");
+
+  removeEmpty();
 }
+
 
 // function filterAnswers (filter1, filter2) {
 //   filter1 = filter1.filter(isFiltered);
@@ -112,6 +126,8 @@ function showContact (contactId) {
 //   }
 // }
 
+
+
 function attachContactListeners() {
   $("ul#contacts").on("click", "li", function() {
     showContact(this.id);
@@ -123,6 +139,8 @@ function attachContactListeners() {
     displayContactDetails(addressBook);
   });
 };
+
+
 
 $(document).ready(function() {
   attachContactListeners();
@@ -160,7 +178,7 @@ $(document).ready(function() {
 
     // filterAnswers(newContact, newAddress);
     addressBook.addContact(newContact, newAddress);
-    $("p").not("").remove();
+    // $("p").not("").remove();
     displayContactDetails(addressBook);
   })
 })
