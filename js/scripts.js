@@ -1,13 +1,18 @@
 // Business Logic for AddressBook ---------
 function AddressBook() {
   this.contacts = [],
+  this.addresses = [],
   this.currentId = 0
 }
 
-AddressBook.prototype.addContact = function(contact) {
+AddressBook.prototype.addContact = function(contact, address) {
   contact.id = this.assignId();
   this.contacts.push(contact);
+  this.addresses.push(address);
+  console.log(this.addresses);
+  console.log(this.contacts);
 }
+
 
 AddressBook.prototype.assignId = function() {
   this.currentId += 1;
@@ -38,11 +43,24 @@ AddressBook.prototype.deleteContact = function(id) {
 }
 
 // Business Logic for Contacts ---------
-function Contact(firstName, lastName, phoneNumber) {
+function Contact(firstName, lastName, phoneNumber, emailAddress, addressType) {
   this.firstName = firstName,
   this.lastName = lastName,
-  this.phoneNumber = phoneNumber
+  this.phoneNumber = phoneNumber,
+  this.emailAddress = emailAddress,
+  this.addressType = addressType
+
 }
+
+  function Address(streetAddress, city, state, zipCode, workAddress, mailAddress) {
+    this.streetAddress = streetAddress,
+    this.city = city,
+    this.state = state,
+    this.zipCode = zipCode,
+    this.workAddress = workAddress,
+    this.mailAddress = mailAddress
+  }
+
 
 Contact.prototype.fullName = function() {
   return this.firstName + " " + this.lastName;
@@ -66,6 +84,15 @@ function showContact (contactId) {
   $(".first-name").html(contact.firstName);
   $(".last-name").html(contact.lastName);
   $(".phone-number").html(contact.phoneNumber);
+  $(".email-address").html(contact.emailAddress);
+  $(".street-address").html(contact.streetAddress);
+  $(".city").html(contact.city);
+  $(".state").html(contact.state);
+  $(".zip-code").html(contact.zipCode);
+
+  $(".work-address").html(contact.workAddress);
+  $(".mail-address").html(contact.mailAddress);
+
   var buttons = $("#buttons");
   buttons.empty();
   buttons.append("<button class='deleteButton' id=" + + contact.id + ">Delete</button>");
@@ -90,13 +117,34 @@ $(document).ready(function() {
     var inputtedFirstName = $("input#new-first-name").val();
     var inputtedLastName = $("input#new-last-name").val();
     var inputtedPhoneNumber = $("input#new-phone-number").val();
+    var inputtedEmailAddress = $("input#new-email-address").val();
+    var inputtedStreetAddress = $("input#new-street-address").val();
+    var inputtedCity = $("input#new-city").val();
+    var inputtedState = $("input#new-state").val();
+    var inputtedZipCode = $("input#new-zip-code").val();
+    var inputtedWorkAddress = $("input#new-work-address").val();
+    var inputtedMailAddress = $("input#new-mail-address").val();
 
     $("input#new-first-name").val("");
     $("input#new-last-name").val("");
     $("input#new-phone-number").val("");
-    
-    var newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedPhoneNumber);
-    addressBook.addContact(newContact);
+    $("input#new-email-address").val("");
+    $("input#new-street-address").val("");
+    $("input#new-city").val("");
+    $("input#new-state").val("");
+    $("input#new-zip-code").val("");
+
+    $("input#new-work-address").val("");
+    $("input#new-mail-address").val("");
+
+    var newAddress = new Address(inputtedStreetAddress, inputtedCity, inputtedState, inputtedZipCode, inputtedWorkAddress, inputtedMailAddress);
+
+    var newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedPhoneNumber, inputtedEmailAddress);
+
+    const merge = Object.assign(newContact, newAddress);
+    console.log(merge);
+
+    addressBook.addContact(newContact, newAddress);
     displayContactDetails(addressBook);
   })
 })
